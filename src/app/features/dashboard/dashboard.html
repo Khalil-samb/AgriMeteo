@@ -1,12 +1,18 @@
 <div class="grid grid-cols-12 gap-2">
     <div class="col-span-8">
-        <app-card-map></app-card-map>
+
+        <app-card-map (weatherSelected)="onWeatherSelected($event)"></app-card-map>
+
         <app-list-regions> </app-list-regions>
+
     </div>
 
     <div class="col-span-4">
-        <app-dashbord-panel> </app-dashbord-panel>
+
+        <app-dashbord-panel [meteoInfo]="selectedWeather"> </app-dashbord-panel>
+
         <app-weather-chart></app-weather-chart>
+        
     </div>
 </div>
 
