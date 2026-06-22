@@ -11,4 +11,12 @@ import { WeatherChart } from '../weather-chart/weather-chart';
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
-export class Dashboard {}
+export class Dashboard {
+  
+  selectedWeather: any = null;
+  onWeatherSelected(event: any) {
+
+    this.selectedWeather = event;
+
+  }
+}

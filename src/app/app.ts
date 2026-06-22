@@ -5,7 +5,7 @@ import { ListRegions } from './features/list-regions/list-regions';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, ListRegions],
+  imports: [RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
