@@ -1,6 +1,6 @@
-import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { MeteoService } from '../../../services/weather.service';
-import { REGIONS } from '../../../data/regions';
+import { REGIONS } from '../../../data/regions.data';
 
 @Component({
   selector: 'app-card-map',
@@ -13,30 +13,30 @@ export class CardMap {
   // Événement émis lorsqu'une région est sélectionnée
   @Output() weatherSelected = new EventEmitter<any>();
 
-  selectedRegion: string | null = null;
+  @Input() activeRegion: string | null = null; // ← reçoit la synchro du parent
+
+  // selectedRegion!: string;
 
   serviceMeteo = inject(MeteoService)
-
-  donneesMeteo! : any
   
-  onRegionClick(regionkey: string) {
-    this.selectedRegion = regionkey;
+  onRegionClick(svgId: string) {
+    // this.selectedRegion = svgId
 
-    const region = REGIONS[regionkey]
+    const region = REGIONS.find(r => r.id === svgId);
 
     if (!region) {
       console.log("region n'existe pas");
       return
-      
     }
 
     this.serviceMeteo.getMeteo(region.lat, region.lon).subscribe({
         next: (data) => {
-          this.donneesMeteo = data
-          console.log(this.donneesMeteo);
+
+          // console.log(data);
 
           this.weatherSelected.emit({
-            region: region.name,
+            regionKey: svgId,
+            region: region.name, 
             weather: data
           });
           
@@ -45,10 +45,9 @@ export class CardMap {
         error: (err) => {
 
           console.error(err);
+          console.log("Erreur de recuperation API meteo.");
 
         }
       });
-
-    console.log('Région sélectionnée:', region);
   }
 }

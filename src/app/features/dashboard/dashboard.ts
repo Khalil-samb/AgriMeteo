@@ -4,6 +4,7 @@ import { ListRegions } from '../list-regions/list-regions';
 import { DashbordPanel } from '../dashbord-panel/dashbord-panel';
 import { StatsCards } from '../stats-cards/stats-cards';
 import { WeatherChart } from '../weather-chart/weather-chart';
+import { generateTemperatureHistory } from '../../utils/HistoryTemp';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,9 +15,17 @@ import { WeatherChart } from '../weather-chart/weather-chart';
 export class Dashboard {
   
   selectedWeather: any = null;
+  selectedRegionKey: string | null = null;
+
+  historiqueTemp: number[] = [];
+
   onWeatherSelected(event: any) {
 
     this.selectedWeather = event;
+
+    this.selectedRegionKey = event.regionKey
+
+    this.historiqueTemp = generateTemperatureHistory(event.weather.main.temp);
 
   }
 }

@@ -1,9 +1,9 @@
 @if(meteoInfo){
 <!-- Header -->
-<div class="max-w-3xl bg-white rounded-2xl shadow overflow-hidden">
+<div class="w-full bg-white rounded-2xl shadow overflow-hidden animate-slide-in">
     <div class="bg-gradient-to-r from-green-900 to-green-700 text-white p-5">
         <!-- Haut -->
-        <div class="flex justify-between items-start">
+        <div class="flex flex-col sm:flex-row justify-between items-start gap-4">
 
             <div>
                 <div class="flex items-center gap-2 text-[11px] uppercase tracking-[3px] text-green-200">
@@ -13,7 +13,7 @@
 
                 </div>
 
-                <h2 class="text-3xl font-bold mt-1">
+                <h2 class="text-2xl md:text-3xl font-bold mt-1">
                     {{ meteoInfo.region }}
                     
                 </h2>
@@ -25,7 +25,7 @@
             </div>
 
             <!-- Meteo -->
-            <div class="flex flex-col items-end">
+            <div class="lex flex-col items-start sm:items-end">
 
                 <img class="w-16 h-16"
                     [src]="'https://openweathermap.org/img/wn/' + meteoInfo.weather.weather[0].icon + '@2x.png'"
@@ -42,9 +42,9 @@
         </div>
 
         <!-- Température -->
-        <div class="flex items-center gap-6 mt-6">
+        <div class="flex flex-col sm:flex-row sm:items-center gap-4 mt-6">
 
-            <h3 class="text-6xl font-bold leading-none">
+            <h3 class="text-5xl md:text-6xl font-bold leading-none">
                 {{ meteoInfo.weather.main.temp | number:'1.0-0' }}°
                   
             </h3>
@@ -71,7 +71,7 @@
     <!-- Statistiques -->
     <div class="p-4">
 
-        <div class="grid grid-cols-2 gap-3">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
 
             <!-- Humidité -->
             <div class="border border-gray-300 rounded-xl p-4 bg-gray-50 hover:bg-gray-100 transition">
@@ -139,7 +139,7 @@
 
 </div>
 
-<div class="bg-white rounded-2xl shadow mt-4 overflow-hidden p-4">
+<div class="bg-white rounded-2xl shadow mt-4 overflow-hidden p-4 w-full">
     <i class="fas fa-fire text-gray-500"></i>
      <span class="text-sm font-medium text-gray-500 ml-2">
         Indice de Risque Climatique
@@ -174,7 +174,8 @@
                 stroke-width="10"
                 stroke-linecap="round"
                 [attr.stroke-dasharray]="314"
-                [attr.stroke-dashoffset]="314 - (314 * 22 / 100)"
+                [attr.stroke]="risque.color"
+                [attr.stroke-dashoffset]="314 - (314 * risque.score / 100)"
                 transform="rotate(-90 70 70)">
             </circle>
             <text
@@ -184,8 +185,8 @@
                 font-size="20"
                 font-weight="bold"
                 fill="#374151">
-                <!-- {{ risk.score }}% -->
-                  22%
+                {{ risque.score }}%
+                
                 
             </text>
         </svg>
@@ -193,9 +194,9 @@
 
     <div class="flex justify-center mt-1">
 
-        <span class="px-4 py-2 rounded-full text-white text-sm font-medium" [style.backgroundColor]="">
-            <!-- {{ risk.label }} -->
-            risque faible
+        <span class="px-4 py-2 rounded-full text-white text-sm font-medium" [style.backgroundColor]="risque.color">
+            {{ risque.label }}
+            
         </span>
         
     </div>

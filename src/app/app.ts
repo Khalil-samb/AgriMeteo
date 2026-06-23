@@ -1,14 +1,22 @@
-import { Component, signal } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { Component } from '@angular/core';
 import {  RouterOutlet } from '@angular/router';
-import { ListRegions } from './features/list-regions/list-regions';
 
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, DatePipe],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('AgriMeteo');
+  
+  dateActuelle = new Date();
+
+  constructor() {
+    setInterval(() => {
+      this.dateActuelle = new Date();
+    }, 1000);
+  }
+
 }
