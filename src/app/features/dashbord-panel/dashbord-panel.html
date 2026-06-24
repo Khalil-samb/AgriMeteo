@@ -1,0 +1,206 @@
+@if(meteoInfo){
+<!-- Header -->
+<div class="w-full bg-white rounded-2xl shadow overflow-hidden animate-slide-in">
+    <div class="bg-gradient-to-r from-green-900 to-green-700 text-white p-5">
+        <!-- Haut -->
+        <div class="flex flex-col sm:flex-row justify-between items-start gap-4">
+
+            <div>
+                <div class="flex items-center gap-2 text-[11px] uppercase tracking-[3px] text-green-200">
+
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Région sélectionnée</span>
+
+                </div>
+
+                <h2 class="text-2xl md:text-3xl font-bold mt-1">
+                    {{ meteoInfo.region }}
+                    
+                </h2>
+
+                <p class="text-sm text-green-100 mt-1">
+                    Sénégal - Mise à jour à {{ meteoInfo.weather.dt * 1000 | date:'HH:mm' }}
+                </p>
+
+            </div>
+
+            <!-- Meteo -->
+            <div class="lex flex-col items-start sm:items-end">
+
+                <img class="w-16 h-16"
+                    [src]="'https://openweathermap.org/img/wn/' + meteoInfo.weather.weather[0].icon + '@2x.png'"
+                    alt="Météo">
+                
+
+                <p class="text-sm text-green-100 capitalize -mt-1">
+                    {{ meteoInfo.weather.weather[0].description }}
+                    
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- Température -->
+        <div class="flex flex-col sm:flex-row sm:items-center gap-4 mt-6">
+
+            <h3 class="text-5xl md:text-6xl font-bold leading-none">
+                {{ meteoInfo.weather.main.temp | number:'1.0-0' }}°
+                  
+            </h3>
+
+            <div class="space-y-1">
+
+                <p class="text-green-100 text-sm">
+                    Ressenti
+                    {{ meteoInfo.weather.main.feels_like | number:'1.0-0' }}°
+                    
+                </p>
+
+                <p class="text-green-100 text-sm">
+                    Humidité
+                    {{ meteoInfo.weather.main.humidity }}%
+                    
+                </p>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Statistiques -->
+    <div class="p-4">
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+
+            <!-- Humidité -->
+            <div class="border border-gray-300 rounded-xl p-4 bg-gray-50 hover:bg-gray-100 transition">
+
+                <p class="text-xs text-gray-500 mb-2">
+                    <i class="fas fa-tint"></i> Humidité
+                </p>
+
+                <h4 class="text-2xl font-bold text-gray-800">
+                    {{ meteoInfo.weather.main.humidity || '--' }}
+                    
+                    <span class="text-base font-normal">%</span>
+                </h4>
+
+            </div>
+
+            <!-- Vent -->
+            <div class="border border-gray-300 rounded-xl p-4 bg-gray-50 hover:bg-gray-100 transition">
+
+                <p class="text-xs text-gray-500 mb-2">
+                    <i class="fas fa-wind"></i> Vent
+                </p>
+
+                <h4 class="text-2xl font-bold text-gray-800">
+                    {{ meteoInfo.weather.wind.speed || '--' }}
+                    
+                    <span class="text-base font-normal">km/h</span>
+                </h4>
+
+            </div>
+
+            <!-- Précipitations -->
+            <div class="border border-gray-300 rounded-xl p-4 bg-gray-50 hover:bg-gray-100 transition">
+
+                <p class="text-xs text-gray-500 mb-2">
+                    <i class="fas fa-sun text-yellow-500"></i> Lever du soleil.
+                </p>
+
+                <h4 class="text-2xl font-bold text-gray-800">
+                    {{ meteoInfo.weather.sys.sunrise * 1000 | date:'HH:mm' }}
+                    
+                    <span class="text-base font-normal">mn</span>
+                </h4>
+
+            </div>
+
+            <!-- Visibilité -->
+            <div class="border border-gray-300 rounded-xl p-4 bg-gray-50 hover:bg-gray-100 transition">
+
+                <p class="text-xs text-gray-500 mb-2">
+                    <i class="fas fa-cloud-sun text-orange-500"></i> Coucher du soleil
+                </p>
+
+                <h4 class="text-3xl font-bold text-gray-800">
+                     {{ meteoInfo.weather.sys.sunset * 1000 | date:'HH:mm' }}
+                    
+                    <span class="text-base font-normal">mn</span>
+                </h4>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="bg-white rounded-2xl shadow mt-4 overflow-hidden p-4 w-full">
+    <i class="fas fa-fire text-gray-500"></i>
+     <span class="text-sm font-medium text-gray-500 ml-2">
+        Indice de Risque Climatique
+    </span>
+   
+    <div class="flex justify-center">
+        <svg
+            width="140"
+            height="140"
+            viewBox="0 0 140 140">
+
+            <!-- fond -->
+
+            <circle
+                cx="70"
+                cy="70"
+                r="50"
+                fill="none"
+                stroke="#E5E7EB"
+                stroke-width="10">
+                
+            </circle>
+
+            <!-- progression -->
+
+            <circle
+                cx="70"
+                cy="70"
+                r="50"
+                fill="none"
+                [attr.stroke]=""
+                stroke-width="10"
+                stroke-linecap="round"
+                [attr.stroke-dasharray]="314"
+                [attr.stroke]="risque.color"
+                [attr.stroke-dashoffset]="314 - (314 * risque.score / 100)"
+                transform="rotate(-90 70 70)">
+            </circle>
+            <text
+                x="70"
+                y="75"
+                text-anchor="middle"
+                font-size="20"
+                font-weight="bold"
+                fill="#374151">
+                {{ risque.score }}%
+                
+                
+            </text>
+        </svg>
+    </div>
+
+    <div class="flex justify-center mt-1">
+
+        <span class="px-4 py-2 rounded-full text-white text-sm font-medium" [style.backgroundColor]="risque.color">
+            {{ risque.label }}
+            
+        </span>
+        
+    </div>
+    
+</div>
+
+}

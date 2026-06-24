@@ -1,69 +1,55 @@
-<header class="bg-white border-b border-gray-200 px-30 h-16 flex items-center justify-between ">
-
-  <!-- Partie gauche : logo + date -->
+<header class="bg-white border-b border-gray-200 px-4 md:px-10 py-3 md:h-16 flex flex-col md:flex-row md:items-center justify-between gap-4">
   <div class="flex items-center gap-6">
-
-    <!-- Logo -->
     <div class="flex items-center gap-2.5">
       <div class="w-10 h-10 rounded-full bg-[#1a5c3a] flex items-center justify-center">
-        
- 
-      <i class="fa-brands fa-square-pied-piper text-white text-1xl "></i>
+        <i class="fa-brands fa-square-pied-piper text-white text-xl"></i>
       </div>
       <div>
         <h2 class="text-sm font-semibold text-[#1a5c3a] m-0">AgriMétéo</h2>
         <p class="text-[11px] text-gray-400 uppercase tracking-wide m-0">Sénégal</p>
       </div>
     </div>
-
-    <!-- Séparateur -->
     <div class="w-px h-8 bg-gray-200"></div>
-
-    <!-- Date et heure -->
-    <div>
-      <h3 class="text-[13px] font-medium text-gray-900 m-0">Vendredi 19 Juin 2026</h3>
-      <p class="text-[12px] text-gray-400 m-0">12:19 · UTC+0</p>
+    <div class="hidden md:block">
+      <h3 class="text-[13px] font-medium text-gray-900 m-0">
+        {{  dateActuelle | date: 'EEEE d MMMM y'}}
+      </h3>
+      <p class="text-[12px] text-gray-400 m-0">
+        {{ dateActuelle |date: 'HH:m'}}  · UTC+0
+      </p>
     </div>
   </div>
 
-  <!-- Partie droite : recherche + notif + profil -->
-  <div class="flex items-center gap-4">
-
-    <!-- Barre de recherche -->
-    <div class="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-1.5 min-w-[220px]">
+  <div class="flex items-center gap-3 w-full md:w-auto justify-between md:justify-normal">
+    <div class="hidden md:flex items-center gap-2 bg-gray-100 rounded-full px-4 py-1.5 min-w-[220px]">
       <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
-      
       <label for="search" class="sr-only">Rechercher une région</label>
       <input
         id="search"
         type="text"
         placeholder="Rechercher une région..."
-        class="bg-transparent text-sm text-gray-400 placeholder-gray-400 outline-none w-full"
+        class="bg-transparent text-sm text-gray-600 placeholder-gray-400 outline-none w-full"
       />
     </div>
 
-    <!-- Notification -->
     <div class="relative">
-      <i class="fa-regular fa-bell text-gray-20"></i>
+      <i class="fa-regular fa-bell text-gray-500 text-lg"></i>
       <span class="absolute -top-1 -right-1.5 bg-orange-400 text-white text-[10px] font-semibold w-4 h-4 rounded-full flex items-center justify-center">2</span>
     </div>
 
-    <!-- Profil -->
     <div class="flex items-center gap-2">
       <div class="w-8 h-8 rounded-full bg-[#1a5c3a] flex items-center justify-center text-white text-xs font-semibold">
         IS
       </div>
       <h3 class="text-[13px] font-medium text-gray-900 m-0">Ibrahima Samb</h3>
     </div>
-
   </div>
 </header>
 
-<main class="px-30 min-h-screen py-10">
+<main class="px-4 md:px-10 min-h-screen py-4 md:py-10">
   <router-outlet></router-outlet>
 </main>
 
-
-<footer class="bg-white border-t border-gray-200 px-50 h-16 flex items-center justify-center" >
+<footer class="bg-white border-t border-gray-200 px-10 h-16 flex items-center justify-center">
   <h3 class="text-sm">AgriMétéo Sénégal · 2026</h3>
 </footer>

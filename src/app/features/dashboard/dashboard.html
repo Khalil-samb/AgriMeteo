@@ -1,0 +1,49 @@
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-4">
+    <div class="xl:col-span-8">
+
+        <app-card-map 
+            [activeRegion]="selectedRegionKey"
+            (weatherSelected)="onWeatherSelected($event)">
+        </app-card-map>
+
+        <app-list-regions
+            [activeRegion]="selectedRegionKey"
+            (weatherSelected)="onWeatherSelected($event)"> 
+        </app-list-regions>
+
+    </div>
+
+    <div class="xl:col-span-4">
+
+    @if(selectedWeather){
+
+        <app-dashbord-panel
+            [meteoInfo]="selectedWeather">
+        </app-dashbord-panel>
+
+        <app-weather-chart
+            [temperatureHistory]="historiqueTemp">
+        </app-weather-chart>
+
+    } @else {
+
+        <div class="bg-white rounded-2xl shadow p-8 text-center">
+
+            <i class="fas fa-map-marked-alt text-5xl text-green-600"></i>
+
+            <h3 class="mt-4 text-lg font-semibold">
+                Sélectionnez une région
+            </h3>
+
+            <p class="text-gray-500 mt-2">
+                Cliquez sur une région de la carte pour afficher les données météo et l'analyse climatique.
+            </p>
+
+        </div>
+
+    }
+
+</div>
+</div>
+
+<app-stats-cards></app-stats-cards>

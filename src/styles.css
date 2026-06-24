@@ -2,6 +2,8 @@
 
 @import 'tailwindcss';
 
+@source "../src/**/*.{html,ts}"; 
+
 body{
     background-color: #F2EDE4;
 }
