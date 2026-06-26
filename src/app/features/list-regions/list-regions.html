@@ -1,4 +1,4 @@
-<div class="w-full bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden mt-4">
+<div class="hidden md:block w-full bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden mt-4">
 
   <p class="text-sm font-medium text-gray-800 px-5 pt-4 pb-2">Toutes les Régions</p>
   <div class="max-h-[350px] overflow-y-auto">
@@ -16,8 +16,27 @@
         <p class="text-sm font-medium text-gray-900">{{ region.name }}</p>
       </div>
       <div class="flex items-center gap-2">
-        <span class="text-sm font-semibold text-gray-900">{{ meteoParRegion[region.id].main.temp | number:'1.0-1' }} °C</span>
-        <span class="w-2.5 h-2.5 rounded-full" [ngClass]="getTempColor(meteoParRegion[region.id].main.temp)"></span>
+        <span class="text-sm font-semibold text-gray-900">
+           @if(meteoParRegion[region.id]) {
+              {{ meteoParRegion[region.id].main.temp | number:'1.0-1' }} °C
+            } @else {
+              --
+            }
+        </span>
+        @if(meteoParRegion[region.id]) {
+
+          <span
+            class="w-2.5 h-2.5 rounded-full"
+            [ngClass]="getTempColor(meteoParRegion[region.id].main.temp)">
+          </span>
+
+        } @else {
+
+          <span
+            class="w-2.5 h-2.5 rounded-full bg-gray-300 animate-pulse">
+          </span>
+
+        }
       </div>
     </div>
     }
